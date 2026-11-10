@@ -19,3 +19,8 @@ test("fills in outDir from the defaults", () => {
 test("reads targets", () => {
   assert.deepEqual(loadConfig(fixture("targets.json")).targets, ["web"]);
 });
+
+test("an empty file falls back to the defaults", () => {
+  writeFileSync(tmp, "");
+  assert.deepEqual(loadConfig(tmp), { targets: ["all"], outDir: "dist" });
+});

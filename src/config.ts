@@ -8,6 +8,7 @@ const DEFAULTS: Config = { targets: ["all"], outDir: "dist" };
 
 export function loadConfig(path: string): Config {
   const text = readFileSync(path, "utf8");
-  const parsed = JSON.parse(text) as Config;
-  return { ...DEFAULTS, ...parsed, targets: parsed.targets };
+  const parsed = text.trim() === "" ? null : (JSON.parse(text) as Partial<Config> | null);
+  if (!parsed) return { ...DEFAULTS };
+  return { ...DEFAULTS, ...parsed, targets: parsed.targets ?? DEFAULTS.targets };
 }

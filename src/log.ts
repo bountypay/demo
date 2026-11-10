@@ -1,10 +1,11 @@
-import { readFileSync } from "node:fs";
+import { createReadStream } from "node:fs";
+import { createInterface } from "node:readline";
 
-export function parseLog(path: string): Entry[] {
-  return readFileSync(path, "utf8")
-    .split("\n")
-    .filter(Boolean)
-    .map(parseLine);
+export async function* parseLog(path: string): AsyncGenerator<Entry> {
+  const lines = createInterface({ input: createReadStream(path), crlfDelay: Infinity });
+  for await (const line of lines) {
+    if (line) yield parseLine(line);
+  }
 }
 
 export interface Entry {

@@ -1,5 +1,5 @@
 /**
- * Fetchs JSON from a URL.
+ * Fetches JSON from a URL.
  */
 export async function fetchJson(url: string): Promise<unknown> {
   const res = await fetch(url);

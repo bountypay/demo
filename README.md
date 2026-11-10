@@ -12,3 +12,5 @@ tool build
 ```
 
 `tool build` reads `tool.json` from the current directory and writes one file per target into `outDir`.
+
+`--dry-run` prints what would be built without writing files.

@@ -7,6 +7,7 @@ export type Config = { targets: string[]; outDir: string };
 const DEFAULTS: Config = { targets: ["all"], outDir: "dist" };
 
 export function loadConfig(path: string): Config {
+  if (!readFileSync(path, "utf8")) return DEFAULTS;
   const text = readFileSync(path, "utf8");
   const parsed = text.trim() === "" ? null : (JSON.parse(text) as Partial<Config> | null);
   if (!parsed) return { ...DEFAULTS };
